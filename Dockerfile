@@ -1,27 +1,42 @@
-#this is a dockerfile
+#Dockerfile for building OpenWrt with ssh
 
-FROM            ubuntu:12.04
+
+FROM            gmacario/easy-build
 MAINTAINER      blacksun <sunye1996517@gmail.com>
+
 
 #change mirro&install ssh server
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe"> /etc/apt/sources.list
 RUN apt-get update
-RUN apt-get upgrade
-RUN apt-get install -f -y openssh-server
+RUN apt-get -y upgrade
+RUN apt-get install -y openssh-server
 RUN mkdir -p /var/run/sshd
 
+
 #set ssh server passwd
-RUN echo "root:123456" | chpasswd 
+RUN echo "root:root" | chpasswd 
+
 
 #install openwrt develop
-RUN apt-get update
-RUN apt-get install -f -y libc6-dev g++ dpkg-dev python-bzrlib python-bzrlib gcj-4.6-jre-headless gcj-4.6-jre-lib ecj-gcj git libc-dev libssl1.0.0 libssl-doc perl liburi-perl libwww-perl python2.7 mercurial-common  build-essential subversion git-core libncurses5-dev zlib1g-dev gawk flex quilt libssl-dev xsltproc libxml-parser-perl mercurial bzr ecj cvs unzip
-RUN apt-get clean
+RUN apt-get install -y git tig
+RUN apt-get install -y mc
+RUN apt-get install -y screen
+RUN apt-get install -y git-core build-essential libssl-dev
+RUN apt-get install -y subversion
+RUN apt-get install -y libncurses5-dev gawk python wget
+RUN apt-get install -y libxml-parser-perl
+
+#repo openwrt code
+RUN cd ~ && git clone git://git.openwrt.org/openwrt.git
+RUN cd ~/openwrt && ./scripts/feeds update -a
+RUN cd ~/openwrt && ./scripts/feeds install -a
+RUN cd ~/openwrt make defconfig
+RUN cd ~/openwrt make prereq
 
 
 #open 22 port
 EXPOSE 22
 
+
 #make ssh keep running
-ENTRYPOINT ["/usr/sbin/sshd"]
-CMD ["-D"]
+CMD    ["/usr/sbin/sshd", "-D"]
