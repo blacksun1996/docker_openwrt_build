@@ -14,7 +14,7 @@ RUN mkdir -p /var/run/sshd
 RUN echo "root:123456" | chpasswd 
 
 #install openwrt develop
-RUN apt-get install -y gcc g++ binutils patch bzip2 flex bison make autoconf gettext texinfo unzip zip unrar p7zip p7zip-rar p7zip-full sharutils subversion libncurses5-dev ncurses-term zlib1g-dev gawk git-core
+RUN apt-get install -y gcc g++ binutils patch bzip2 flex bison make autoconf gettext texinfo unzip zip p7zip p7zip-full sharutils subversion libncurses5-dev ncurses-term zlib1g-dev gawk git-core
 RUN apt-get clean
 
 

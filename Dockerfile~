@@ -8,15 +8,15 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe"> /etc/apt/
 RUN apt-get update
 RUN apt-get upgrade
 RUN apt-get install -y openssh-server
-RUN apt-get clean
 RUN mkdir -p /var/run/sshd
 
 #set ssh server passwd
 RUN echo "root:123456" | chpasswd 
 
 #install openwrt develop
-RUN apt-get install -y subversion build-essential libncurses5-dev zlib1g-dev gawk git ccache gettext libssl-dev xsltproc file
-RUN git clone git://git.openwrt.org/openwrt.git
+RUN apt-get install -y gcc g++ binutils patch bzip2 flex bison make autoconf gettext texinfo unzip zip unrar p7zip p7zip-rar p7zip-full sharutils subversion libncurses5-dev ncurses-term zlib1g-dev gawk git-core
+RUN apt-get clean
+
 
 #open 22 port
 EXPOSE 22
