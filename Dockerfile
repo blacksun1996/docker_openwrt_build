@@ -7,7 +7,7 @@ MAINTAINER      blacksun <sunye1996517@gmail.com>
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe"> /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get upgrade
-RUN apt-get install openssh-server
+RUN apt-get install -y openssh-server
 RUN apt-get clean
 RUN mkdir -p /var/run/sshd
 
