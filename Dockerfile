@@ -21,10 +21,11 @@ RUN echo "root:root" | chpasswd
 RUN apt-get install -y git tig
 RUN apt-get install -y mc
 RUN apt-get install -y screen
-RUN apt-get install -y git-core build-essential libssl-dev
-RUN apt-get install -y subversion
-RUN apt-get install -y libncurses5-dev gawk python wget
-RUN apt-get install -y libxml-parser-perl
+RUN apt-get -y install git-core build-essential libssl-dev
+RUN apt-get -y install subversion
+RUN apt-get -y install libncurses5-dev gawk python wget
+RUN apt-get -y install libxml-parser-perl
+
 
 #repo openwrt code
 RUN cd ~ && git clone git://git.openwrt.org/openwrt.git
@@ -40,3 +41,5 @@ EXPOSE 22
 
 #make ssh keep running
 CMD    ["/usr/sbin/sshd", "-D"]
+
+

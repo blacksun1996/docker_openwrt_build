@@ -1,7 +1,9 @@
 #Dockerfile for building OpenWrt with ssh
 
+
 FROM            gmacario/easy-build
 MAINTAINER      blacksun <sunye1996517@gmail.com>
+
 
 #change mirro&install ssh server
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe"> /etc/apt/sources.list
@@ -10,32 +12,34 @@ RUN apt-get -y upgrade
 RUN apt-get install -y openssh-server
 RUN mkdir -p /var/run/sshd
 
+
 #set ssh server passwd
 RUN echo "root:root" | chpasswd 
-RUN sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+
 
 #install openwrt develop
 RUN apt-get install -y git tig
 RUN apt-get install -y mc
 RUN apt-get install -y screen
-RUN apt-get install -y git-core build-essential libssl-dev
-RUN apt-get install -y subversion
-RUN apt-get install -y libncurses5-dev gawk python wget
-RUN apt-get install -y libxml-parser-perl
+RUN apt-get -y install git-core build-essential libssl-dev
+RUN apt-get -y install subversion
+RUN apt-get -y install libncurses5-dev gawk python wget
+RUN apt-get -y install libxml-parser-perl
 
-RUN mkdir -p /shared
 
 #repo openwrt code
-RUN su -c "cd ~ && git clone git://git.openwrt.org/openwrt.git" build
-RUN su -c "cd ~/openwrt && ./scripts/feeds update -a" build
-RUN su -c "cd ~/openwrt && ./scripts/feeds install -a" build
-RUN su -c "cd ~/openwrt make defconfig" build
-RUN su -c "cd ~/openwrt make prereq" build
-ADD build.local /home/build
+RUN cd ~ && git clone git://git.openwrt.org/openwrt.git
+RUN cd ~/openwrt && ./scripts/feeds update -a
+RUN cd ~/openwrt && ./scripts/feeds install -a
+RUN cd ~/openwrt make defconfig
+RUN cd ~/openwrt make prereq
+
 
 #open 22 port
 EXPOSE 22
 
+
 #make ssh keep running
 CMD    ["/usr/sbin/sshd", "-D"]
+
+
