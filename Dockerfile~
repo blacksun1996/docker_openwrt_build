@@ -6,7 +6,7 @@ MAINTAINER      blacksun <sunye1996517@gmail.com>
 # Install packages
 RUN apt-get update
 RUN apt-get upgrade
-RUN apt-get install subversion build-essential libncurses5-dev zlib1g-dev gawk git ccache gettext libssl-dev xsltproc file
+RUN apt-get install gcc g++ binutils patch bzip2 flex bison make autoconf gettext texinfo unzip zip unrar p7zip p7zip-rar p7zip-full sharutils subversion libncurses5-dev ncurses-term zlib1g-dev gawk git-core
 RUN apt-get clean 
 
 #git openwrt trunk code
