@@ -14,6 +14,6 @@ RUN git clone git://git.openwrt.org/openwrt.git
 
 
 #install and run ssh server
-RUN openssh-server openssh-client
+RUNopenssh-server openssh-client
 RUN /etc/init.d/ssh restart
 CMD ["/usr/sbin/sshd", "-D"]
